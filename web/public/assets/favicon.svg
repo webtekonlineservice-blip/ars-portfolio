@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- black rounded tile -->
+  <rect width="512" height="512" rx="96" fill="#111111"/>
+  <!-- house roof (yellow) -->
+  <path d="M256 96 L432 232 L392 232 L392 240 L120 240 L120 232 L80 232 Z" fill="#f2e838"/>
+  <!-- ARS wordmark -->
+  <text x="256" y="392" text-anchor="middle"
+        font-family="Helvetica, Arial, sans-serif" font-weight="800"
+        font-size="200" letter-spacing="6" fill="#f2e838">ARS</text>
+</svg>
