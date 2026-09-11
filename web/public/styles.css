@@ -156,3 +156,27 @@ ul.assumptions li { margin: 4px 0; }
 .proforma td { padding: 7px 10px; border-bottom: 1px solid var(--line); }
 .proforma td:last-child { text-align: right; font-weight: 600; }
 .proforma tr.total td { background: #fffdf0; border-top: 2px solid var(--yellow); }
+
+/* ---- contact card ---- */
+.contact-card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); max-width: 560px; overflow: hidden;
+}
+.contact-brand { display: flex; align-items: center; gap: 16px; background: var(--black); padding: 20px 24px; }
+.contact-brand img { height: 54px; width: auto; background: #fff; padding: 5px 8px; border-radius: 8px; }
+.contact-broker { color: #fff; font-weight: 700; font-size: 1.1rem; }
+.contact-agent { color: var(--yellow); font-size: .9rem; font-weight: 600; margin-top: 2px; }
+.contact-list { list-style: none; margin: 0; padding: 8px 24px; }
+.contact-list li { display: flex; align-items: baseline; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.contact-list li:last-child { border-bottom: none; }
+.contact-list .ci { width: 64px; color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; font-weight: 600; flex: none; }
+.contact-list a { color: var(--ink); font-weight: 600; text-decoration: none; }
+.contact-list a:hover { color: var(--yellow-deep); text-decoration: underline; }
+.contact-actions { display: flex; gap: 12px; padding: 4px 24px 22px; }
+.btn-primary, .btn-ghost { display: inline-block; padding: 11px 24px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: .95rem; }
+.btn-primary { background: var(--yellow); color: var(--black); border: 1px solid var(--yellow-deep); }
+.btn-ghost { background: #fff; color: var(--ink); border: 1px solid var(--silver); }
+.btn-primary:hover { filter: brightness(1.04); }
+.btn-ghost:hover { background: var(--silver-2); }
+footer a { color: var(--muted); }
+footer a:hover { color: var(--yellow-deep); }

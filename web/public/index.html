@@ -3,7 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ARS St. Louis Portfolio</title>
+  <title>ARS 8-Property St. Louis Portfolio | Associated Realty Solutions</title>
+  <meta name="description" content="An 8-property single-family investment portfolio in Riverview Gardens, St. Louis County, MO 63137. Available individually or as a package. Presented by ARS Associated Realty Solutions." />
+  <meta name="theme-color" content="#111111" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ARS Associated Realty Solutions" />
+  <meta property="og:title" content="8-Property St. Louis Investment Portfolio" />
+  <meta property="og:description" content="8 single-family homes in Riverview Gardens (63137). ~$733K estimated value, ~$32.5K annual NOI. Buy individually or as a package." />
+  <meta property="og:url" content="https://ars-8.vercel.app/" />
+  <meta property="og:image" content="https://ars-8.vercel.app/assets/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="8-Property St. Louis Investment Portfolio" />
+  <meta name="twitter:description" content="8 single-family homes in Riverview Gardens (63137). ~$733K estimated value, ~$32.5K annual NOI. Individual or package sale." />
+  <meta name="twitter:image" content="https://ars-8.vercel.app/assets/og-card.png" />
+
+  <link rel="icon" type="image/png" href="/assets/ars-logo.png" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -21,6 +41,7 @@
     <button class="tab active" data-tab="overview">Overview</button>
     <button class="tab" data-tab="descriptions">Descriptions</button>
     <button class="tab" data-tab="analysis">Investment Analysis</button>
+    <button class="tab" data-tab="contact">Contact</button>
   </nav>
 
   <main class="wrap">
@@ -220,11 +241,38 @@
       </ul>
     </section>
    </div><!-- /tab-analysis -->
+
+   <div id="tab-contact" class="tab-panel" hidden>
+    <section>
+      <h2>Contact</h2>
+      <p class="hint">For showings, offers, or the full financial package — individual homes or the complete portfolio.</p>
+      <div class="contact-card">
+        <div class="contact-brand">
+          <img src="/assets/ars-logo.png" alt="ARS Associated Realty Solutions" />
+          <div>
+            <div class="contact-broker">ARS Associated Realty Solutions</div>
+            <div class="contact-agent">Robert Wibbenmeyer &middot; Listing Agent</div>
+          </div>
+        </div>
+        <ul class="contact-list">
+          <li><span class="ci">Phone</span><a id="cPhone" href="tel:+13145551234">(314) 555-1234</a></li>
+          <li><span class="ci">Email</span><a id="cEmail" href="mailto:info@arsrealty.com">info@arsrealty.com</a></li>
+          <li><span class="ci">Office</span><span>119 N. Central Ave., Eureka, MO 63025</span></li>
+          <li><span class="ci">Area</span><span>Riverview Gardens &middot; St. Louis County, MO 63137</span></li>
+        </ul>
+        <div class="contact-actions">
+          <a class="btn-primary" id="cCall" href="tel:+13145551234">Call</a>
+          <a class="btn-ghost" id="cMail" href="mailto:info@arsrealty.com?subject=ARS%208-Property%20St.%20Louis%20Portfolio">Email us</a>
+        </div>
+      </div>
+      <p class="hint" style="margin-top:14px">Serving buyers and investors across the St. Louis metro. This portfolio is offered for sale individually or as a package.</p>
+    </section>
+   </div><!-- /tab-contact -->
   </main>
 
   <footer>
     <div class="wrap">
-      <span>ARS Associated Realty Solutions &middot; 119 N. Central Ave., Eureka, MO 63025</span>
+      <span>ARS Associated Realty Solutions &middot; 119 N. Central Ave., Eureka, MO 63025 &middot; <a href="tel:+13145551234">(314) 555-1234</a> &middot; <a href="mailto:info@arsrealty.com">info@arsrealty.com</a></span>
       <span>Data from public/estimated sources — verify before listing.</span>
     </div>
   </footer>

@@ -357,6 +357,7 @@ function switchTab(name) {
   document.getElementById('tab-overview').hidden = name !== 'overview';
   document.getElementById('tab-descriptions').hidden = name !== 'descriptions';
   document.getElementById('tab-analysis').hidden = name !== 'analysis';
+  document.getElementById('tab-contact').hidden = name !== 'contact';
   if (name === 'analysis' && !analysisLoaded) loadAnalysis().catch((e) => console.error(e));
   if (name === 'descriptions') loadDescriptionsTab().catch((e) => console.error(e));
 }
