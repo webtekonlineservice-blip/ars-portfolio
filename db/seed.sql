@@ -54,7 +54,7 @@ INSERT INTO properties
 -- Contracts (6% commission, term to 2027-03-01, list price TBD)
 -- ------------------------------------------------------------
 INSERT INTO contracts (contract_id, property_id, commission_pct, commission_flat, list_price, expiration_date, status) VALUES
-    (1, 1, 6.0, NULL, NULL, '2027-03-01', 'Listing agreement signed; list price to confirm'),
+    (1, 1, 6.0, NULL, 85000, '2027-03-01', 'Listed at $85,000'),
     (2, 2, 6.0, NULL, NULL, '2027-03-01', 'Listing agreement signed; list price to confirm'),
     (3, 3, 6.0, NULL, NULL, '2027-03-01', 'Listing agreement signed; list price to confirm'),
     (4, 4, 6.0, NULL, NULL, '2027-03-01', 'Listing agreement signed; list price to confirm'),
