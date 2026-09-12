@@ -3,30 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ARS 8-Property St. Louis Portfolio | Associated Realty Solutions</title>
-  <meta name="description" content="An 8-property single-family investment portfolio in Riverview Gardens, St. Louis County, MO 63137. Available individually or as a package. Presented by ARS Associated Realty Solutions." />
-  <meta name="theme-color" content="#111111" />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="ARS Associated Realty Solutions" />
-  <meta property="og:title" content="8-Property St. Louis Investment Portfolio" />
-  <meta property="og:description" content="8 single-family homes in Riverview Gardens (63137). ~$733K estimated value, ~$32.5K annual NOI. Buy individually or as a package." />
-  <meta property="og:url" content="https://ars-8.vercel.app/" />
-  <meta property="og:image" content="https://ars-8.vercel.app/assets/og-card.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-
-  <!-- Twitter / X -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="8-Property St. Louis Investment Portfolio" />
-  <meta name="twitter:description" content="8 single-family homes in Riverview Gardens (63137). ~$733K estimated value, ~$32.5K annual NOI. Individual or package sale." />
-  <meta name="twitter:image" content="https://ars-8.vercel.app/assets/og-card.png" />
-
-  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
+  <title>ARS St. Louis Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -42,9 +20,9 @@
 
   <nav class="tabs wrap">
     <button class="tab active" data-tab="overview">Overview</button>
+    <button class="tab" data-tab="map">Map</button>
     <button class="tab" data-tab="descriptions">Descriptions</button>
-    <button class="tab" data-tab="analysis">Investment Analysis</button>
-    <button class="tab" data-tab="contact">Contact</button>
+    <button class="tab" data-tab="analysis">Analysis</button>
   </nav>
 
   <main class="wrap">
@@ -71,9 +49,9 @@
               <th data-key="full_baths" class="num">Baths</th>
               <th data-key="living_sqft" class="num">Sq Ft</th>
               <th data-key="year_built" class="num">Year</th>
-              <th data-key="market_value_2025" class="num">Mkt Value ’25</th>
+              <th data-key="market_value_2025" class="num">Mkt Value '25</th>
               <th data-key="realavm" class="num">RealAVM</th>
-              <th data-key="tax_2025" class="num">Tax ’25</th>
+              <th data-key="tax_2025" class="num">Tax '25</th>
               <th data-key="list_price" class="num">List Price</th>
             </tr>
           </thead>
@@ -111,6 +89,35 @@
       </div>
     </section>
    </div><!-- /tab-overview -->
+
+   <div id="tab-map" class="tab-panel" hidden>
+    <section>
+      <h2>Property Map</h2>
+      <p class="hint">Click markers to view property details. Click a property in the list to highlight it on the map.</p>
+      <div id="mapContainer" class="map-container">
+        <div id="map" class="map"></div>
+      </div>
+      <div class="map-legend">
+        <div class="legend-item">
+          <span class="legend-color" style="background: #f2e838;"></span>
+          <span>Portfolio Property</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background: #1a8f4c;"></span>
+          <span>Selected</span>
+        </div>
+      </div>
+      <div id="mapPropertyInfo" class="map-property-info" hidden>
+        <h3 id="mapPropAddress"></h3>
+        <div class="prop-details">
+          <div><strong>Beds/Baths:</strong> <span id="mapPropBeds"></span></div>
+          <div><strong>Sq Ft:</strong> <span id="mapPropSqft"></span></div>
+          <div><strong>Market Value:</strong> <span id="mapPropValue"></span></div>
+          <div><strong>RealAVM:</strong> <span id="mapPropAVM"></span></div>
+        </div>
+      </div>
+    </section>
+   </div><!-- /tab-map -->
 
    <div id="tab-descriptions" class="tab-panel" hidden>
     <section>
@@ -244,38 +251,11 @@
       </ul>
     </section>
    </div><!-- /tab-analysis -->
-
-   <div id="tab-contact" class="tab-panel" hidden>
-    <section>
-      <h2>Contact</h2>
-      <p class="hint">For showings, offers, or the full financial package — individual homes or the complete portfolio.</p>
-      <div class="contact-card">
-        <div class="contact-brand">
-          <img src="/assets/ars-logo.png" alt="ARS Associated Realty Solutions" />
-          <div>
-            <div class="contact-broker">ARS Associated Realty Solutions</div>
-            <div class="contact-agent">Robert Wibbenmeyer &middot; Listing Agent</div>
-          </div>
-        </div>
-        <ul class="contact-list">
-          <li><span class="ci">Phone</span><a id="cPhone" href="tel:+13146050498">(314) 605-0498</a></li>
-          <li><span class="ci">Email</span><a id="cEmail" href="mailto:arsstl@gmail.com">arsstl@gmail.com</a></li>
-          <li><span class="ci">Office</span><span>119 N. Central Ave., Eureka, MO 63025</span></li>
-          <li><span class="ci">Area</span><span>Riverview Gardens &middot; St. Louis County, MO 63137</span></li>
-        </ul>
-        <div class="contact-actions">
-          <a class="btn-primary" id="cCall" href="tel:+13146050498">Call</a>
-          <a class="btn-ghost" id="cMail" href="mailto:arsstl@gmail.com?subject=ARS%208-Property%20St.%20Louis%20Portfolio">Email us</a>
-        </div>
-      </div>
-      <p class="hint" style="margin-top:14px">Serving buyers and investors across the St. Louis metro. This portfolio is offered for sale individually or as a package.</p>
-    </section>
-   </div><!-- /tab-contact -->
   </main>
 
   <footer>
     <div class="wrap">
-      <span>ARS Associated Realty Solutions &middot; 119 N. Central Ave., Eureka, MO 63025 &middot; <a href="tel:+13146050498">(314) 605-0498</a> &middot; <a href="mailto:arsstl@gmail.com">arsstl@gmail.com</a></span>
+      <span>ARS Associated Realty Solutions &middot; 119 N. Central Ave., Eureka, MO 63025</span>
       <span>Data from public/estimated sources — verify before listing.</span>
     </div>
   </footer>
@@ -288,6 +268,7 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script src="/app.js"></script>
 </body>
 </html>

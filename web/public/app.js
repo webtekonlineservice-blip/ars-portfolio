@@ -355,11 +355,14 @@ async function showDescriptionEdit(id) {
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.dataset.tab === name));
   document.getElementById('tab-overview').hidden = name !== 'overview';
+  document.getElementById('tab-map').hidden = name !== 'map';
   document.getElementById('tab-descriptions').hidden = name !== 'descriptions';
   document.getElementById('tab-analysis').hidden = name !== 'analysis';
-  document.getElementById('tab-contact').hidden = name !== 'contact';
   if (name === 'analysis' && !analysisLoaded) loadAnalysis().catch((e) => console.error(e));
   if (name === 'descriptions') loadDescriptionsTab().catch((e) => console.error(e));
+  if (name === 'map') {
+    setTimeout(() => initMap(), 100);
+  }
 }
 
 // ---- wire up ----
@@ -502,3 +505,79 @@ document.addEventListener('DOMContentLoaded', () => {
     if (id) showDescriptionView(id);
   });
 });
+
+
+// ---- map ----
+let map = null;
+let mapMarkers = {};
+let mapProperties = [];
+
+async function initMap() {
+  if (map) return;
+  
+  // Center on Riverview Gardens, St. Louis
+  map = L.map('map').setView([38.52, -90.28], 14);
+  
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 19,
+  }).addTo(map);
+  
+  // Load properties with coordinates
+  try {
+    mapProperties = await getJSON('/api/properties-map');
+    
+    // Add markers
+    mapProperties.forEach((prop) => {
+      const marker = L.circleMarker([prop.latitude, prop.longitude], {
+        radius: 8,
+        fillColor: '#f2e838',
+        color: '#000',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.8,
+      });
+      
+      marker.bindPopup(`
+        <div style="font-weight: 600;">${prop.address}</div>
+        <div>${prop.beds}BR/${bathLabel(prop.full_baths, prop.half_baths)}BA • ${num(prop.living_sqft)} sf</div>
+        <div>Value: ${money(prop.market_value_2025)}</div>
+        <div><small>AVM: ${money(prop.realavm)}</small></div>
+      `);
+      
+      marker.on('click', () => {
+        highlightPropertyOnMap(prop.property_id);
+        openDetail(prop.property_id);
+      });
+      
+      mapMarkers[prop.property_id] = marker;
+      marker.addTo(map);
+    });
+  } catch (e) {
+    console.error('Map init error:', e);
+  }
+}
+
+function highlightPropertyOnMap(propId) {
+  // Reset all markers
+  Object.values(mapMarkers).forEach((m) => {
+    m.setStyle({ fillColor: '#f2e838' });
+  });
+  
+  // Highlight selected
+  if (mapMarkers[propId]) {
+    mapMarkers[propId].setStyle({ fillColor: '#1a8f4c' });
+    map.setView(mapMarkers[propId].getLatLng(), 15);
+    
+    // Show info card
+    const prop = mapProperties.find((p) => p.property_id === propId);
+    if (prop) {
+      document.getElementById('mapPropAddress').textContent = prop.address;
+      document.getElementById('mapPropBeds').textContent = `${prop.beds}/${bathLabel(prop.full_baths, prop.half_baths)}`;
+      document.getElementById('mapPropSqft').textContent = num(prop.living_sqft) + ' sq ft';
+      document.getElementById('mapPropValue').textContent = money(prop.market_value_2025);
+      document.getElementById('mapPropAVM').textContent = money(prop.realavm);
+      document.getElementById('mapPropertyInfo').hidden = false;
+    }
+  }
+}
