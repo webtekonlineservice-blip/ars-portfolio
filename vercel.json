@@ -1,13 +1,31 @@
 {
   "version": 2,
-  "outputDirectory": "web/public",
+  "buildCommand": "npm run build",
+  "public": "web/public",
+  "env": {
+    "NODE_ENV": "production"
+  },
   "functions": {
     "api/index.js": {
-      "maxDuration": 15,
-      "includeFiles": "db/ars.db"
+      "memory": 1024,
+      "maxDuration": 30
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index" }
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index.js?path=:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
   ]
 }
