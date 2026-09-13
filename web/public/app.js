@@ -523,7 +523,7 @@ let mapProperties = [];
 async function initMap() {
   if (map) return;
   
-  // Center on Riverview Gardens, St. Louis
+  // Create map with default center (will be adjusted after loading properties)
   map = L.map('map').setView([38.52, -90.28], 14);
   
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -534,6 +534,9 @@ async function initMap() {
   // Load properties with coordinates
   try {
     mapProperties = await getJSON('/api/properties-map');
+    
+    // Calculate bounds from all properties
+    const bounds = L.latLngBounds();
     
     // Add markers
     mapProperties.forEach((prop) => {
@@ -561,7 +564,15 @@ async function initMap() {
       
       mapMarkers[prop.property_id] = marker;
       marker.addTo(map);
+      
+      // Add to bounds
+      bounds.extend([prop.latitude, prop.longitude]);
     });
+    
+    // Fit map to all properties with padding
+    if (bounds.isValid()) {
+      map.fitBounds(bounds, { padding: [50, 50] });
+    }
   } catch (e) {
     console.error('Map init error:', e);
   }
