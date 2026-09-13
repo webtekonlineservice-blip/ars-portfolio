@@ -396,7 +396,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelector('#propTable tbody').addEventListener('click', (e) => {
     const tr = e.target.closest('tr[data-id]');
-    if (tr) openDetail(Number(tr.dataset.id));
+    if (tr) {
+      const id = Number(tr.dataset.id);
+      openDetail(id);
+      // Highlight on map if map is visible
+      const mapTab = document.getElementById('tab-map');
+      if (mapTab && !mapTab.hidden && map) {
+        highlightPropertyOnMap(id);
+      }
+    }
   });
 
   document.getElementById('drawerClose').addEventListener('click', () => { document.getElementById('drawer').hidden = true; });
@@ -538,9 +546,10 @@ async function initMap() {
         fillOpacity: 0.8,
       });
       
+      const baths = bathLabel(prop.full_baths || 0, prop.half_baths || 0);
       marker.bindPopup(`
         <div style="font-weight: 600;">${prop.address}</div>
-        <div>${prop.beds}BR/${bathLabel(prop.full_baths, prop.half_baths)}BA • ${num(prop.living_sqft)} sf</div>
+        <div>${prop.beds}BR/${baths}BA • ${num(prop.living_sqft)} sf</div>
         <div>Value: ${money(prop.market_value_2025)}</div>
         <div><small>AVM: ${money(prop.realavm)}</small></div>
       `);
