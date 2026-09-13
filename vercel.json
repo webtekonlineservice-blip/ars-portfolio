@@ -1,7 +1,6 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
-  "public": "web/public",
   "env": {
     "NODE_ENV": "production"
   },
@@ -15,6 +14,10 @@
     {
       "source": "/api/:path*",
       "destination": "/api/index.js?path=:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/web/public/:path*"
     }
   ],
   "headers": [
