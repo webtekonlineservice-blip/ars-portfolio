@@ -292,3 +292,22 @@ ul.assumptions li { margin: 4px 0; }
 .btn-ghost:hover { background: var(--silver-2); }
 footer a { color: var(--muted); }
 footer a:hover { color: var(--yellow-deep); }
+
+/* ---- address links to Google Maps ---- */
+.addr-link {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid var(--yellow);
+  transition: all .15s ease;
+}
+.addr-link:hover {
+  color: var(--yellow-deep);
+  filter: brightness(1.1);
+}
+.addr-link::after {
+  content: " ↗";
+  font-size: .8em;
+  opacity: .7;
+}
+

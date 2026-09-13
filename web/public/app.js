@@ -48,7 +48,7 @@ function renderTable() {
 
   document.querySelector('#propTable tbody').innerHTML = rows.map((p) => `
     <tr data-id="${p.property_id}">
-      <td>${p.address}</td>
+      <td><a href="https://maps.google.com/?q=${encodeURIComponent(p.address + ', Saint Louis, MO 63137')}" target="_blank" rel="noopener" class="addr-link">${p.address}</a></td>
       <td>${p.owner ?? '—'}</td>
       <td class="num">${p.beds}</td>
       <td class="num">${bathLabel(p.full_baths, p.half_baths)}</td>
