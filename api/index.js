@@ -64,6 +64,28 @@ module.exports = async (req, res) => {
       return sendJson(res, 200, property);
     }
 
+    // /api/properties-map
+    if (pathname === '/api/properties-map') {
+      const rows = await db.all(`
+        SELECT 
+          p.property_id,
+          p.address,
+          p.beds,
+          p.full_baths,
+          p.half_baths,
+          p.living_sqft,
+          v.market_total as market_value_2025,
+          v.realavm,
+          COALESCE(pc.latitude, 38.5200) as latitude,
+          COALESCE(pc.longitude, -90.2850) as longitude
+        FROM properties p
+        LEFT JOIN valuations v ON p.property_id = v.property_id AND v.year = 2025
+        LEFT JOIN property_coordinates pc ON p.property_id = pc.property_id
+        ORDER BY p.property_id
+      `);
+      return sendJson(res, 200, rows);
+    }
+
     // /api/analysis, /api/analysis/portfolio, /api/analysis/:id
     if (parts[1] === 'analysis') {
       if (!parts[2]) {
@@ -86,6 +108,25 @@ module.exports = async (req, res) => {
       const row = await db.get(`SELECT * FROM v_investment_analysis WHERE property_id = ${id}`);
       if (!row) return sendJson(res, 404, { error: 'not found' });
       row.assumptions = await db.get(`SELECT * FROM analysis_assumptions WHERE property_id = ${id}`);
+      return sendJson(res, 200, row);
+    }
+
+    // /api/descriptions  (GET all, POST to update)
+    if (pathname === '/api/descriptions' && req.method === 'GET') {
+      const rows = await db.all(`
+        SELECT p.property_id, p.address, d.mls_description, d.retail_description, d.investor_description
+        FROM properties p
+        JOIN descriptions d ON p.property_id = d.property_id
+        ORDER BY p.address
+      `);
+      return sendJson(res, 200, rows);
+    }
+
+    // /api/descriptions/:id  (GET one)
+    if (parts[1] === 'descriptions' && parts[2] && req.method === 'GET') {
+      const id = db.sqlNum(parts[2]);
+      const row = await db.get(`SELECT property_id, mls_description, retail_description, investor_description FROM descriptions WHERE property_id = ${id}`);
+      if (!row) return sendJson(res, 404, { error: 'not found' });
       return sendJson(res, 200, row);
     }
 
